@@ -1,0 +1,23 @@
+{
+  "name": "part9-exercises",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "ts-node": "ts-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordijs/fullstackopen-part9.git"
+  },
+  "author": "Jordi Julià Serra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jordijs/fullstackopen-part9/issues"
+  },
+  "homepage": "https://github.com/jordijs/fullstackopen-part9#readme",
+  "description": "",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
