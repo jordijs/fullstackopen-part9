@@ -1,4 +1,9 @@
-interface ObjectExercise {
+interface ExerciseValues {
+    exerciseHours: number[],
+    target: number;
+}
+
+interface ExerciseReturn {
     periodLength: number,
     trainingDays: number,
     success: boolean,
@@ -8,7 +13,40 @@ interface ObjectExercise {
     average: number;
 }
 
-const calculateExercises = (exerciseHours: number[], target: number): ObjectExercise => {
+const parseArguments = (args: string[]): ExerciseValues => {
+    if (args.length < 3) throw new Error('Not enough arguments');
+    if (args.length < 4) throw new Error('Training hours per day are required');
+
+    const exerciseHours: number[] = process.argv.slice(3).map(element => Number(element));
+
+    exerciseHours.forEach(element => {
+        console.log(element);
+        if (isNaN(element)) {
+            throw new Error('Training hours per day must be numbers');
+        } else if (element < 0) {
+            throw new Error('At least one exercise day is too low');
+        } else if (element > 24) {
+            throw new Error('At least one exercise day is too high');
+        }
+    });
+
+    const target: number = Number(process.argv[2]);
+
+    if (isNaN(target)) {
+        throw new Error('Target must be a number');
+    } else if (target < 0) {
+        throw new Error('Target is too low');
+    } else if (target > 24) {
+        throw new Error('Target is too high');
+    } else {
+        return {
+            exerciseHours, target
+        };
+    }
+
+};
+
+const calculateExercises = (exerciseHours: number[], target: number): ExerciseReturn => {
 
     const periodLength: number = exerciseHours.length;
 
@@ -43,9 +81,13 @@ const calculateExercises = (exerciseHours: number[], target: number): ObjectExer
     };
 };
 
-const exerciseHours: number[] = process.argv.slice(3).map(element => Number(element))
-const target: number = Number(process.argv[2])
-
-console.log(calculateExercises(exerciseHours, target));
-
-
+try {
+    const { exerciseHours, target } = parseArguments(process.argv);
+    console.log(calculateExercises(exerciseHours, target));
+} catch (error: unknown) {
+    let errorMessage = 'A problem ocurred';
+    if (error instanceof Error) {
+        errorMessage += ` Error: ${error.message}`;
+    }
+    console.error(errorMessage);
+}
