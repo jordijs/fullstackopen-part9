@@ -10,15 +10,15 @@ interface ObjectExercise {
 
 const calculateExercises = (exercise: number[], target: number): ObjectExercise => {
 
-    const periodLength = exercise.length;
+    const periodLength: number = exercise.length;
 
-    const trainingDays = exercise.filter(day => day > 0).length;
+    const trainingDays: number = exercise.filter(day => day > 0).length;
 
-    const sum = exercise.reduce(
+    const sum: number = exercise.reduce(
         (accumulator: number, currentValue: number) => accumulator + currentValue, 0
     );
 
-    const average = sum / periodLength;
+    const average: number = sum / periodLength;
 
     let rating: number;
     let ratingDescription: string;
