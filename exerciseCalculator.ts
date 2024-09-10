@@ -8,13 +8,13 @@ interface ObjectExercise {
     average: number;
 }
 
-const calculateExercises = (exercise: number[], target: number): ObjectExercise => {
+const calculateExercises = (exerciseHours: number[], target: number): ObjectExercise => {
 
-    const periodLength: number = exercise.length;
+    const periodLength: number = exerciseHours.length;
 
-    const trainingDays: number = exercise.filter(day => day > 0).length;
+    const trainingDays: number = exerciseHours.filter(day => day > 0).length;
 
-    const sum: number = exercise.reduce(
+    const sum: number = exerciseHours.reduce(
         (accumulator: number, currentValue: number) => accumulator + currentValue, 0
     );
 
@@ -43,8 +43,9 @@ const calculateExercises = (exercise: number[], target: number): ObjectExercise 
     };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
-console.log(calculateExercises([3, 3, 2, 4.5, 5.5, 3, 1, 3, 3, 2, 4.5, 5.5, 3, 1], 2));
-console.log(calculateExercises([1, 0, 1, 0, 1], 3));
-console.log(calculateExercises([1, 0, 2, 4.5, 0, 3, 1, 0, 4], 2));
+const exerciseHours: number[] = process.argv.slice(3).map(element => Number(element))
+const target: number = Number(process.argv[2])
+
+console.log(calculateExercises(exerciseHours, target));
+
 
