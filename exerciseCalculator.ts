@@ -13,7 +13,7 @@ interface ExerciseReturn {
     average: number;
 }
 
-const parseArguments = (args: string[]): ExerciseValues => {
+const parseExerciseArguments = (args: string[]): ExerciseValues => {
     if (args.length < 3) throw new Error('Not enough arguments');
     if (args.length < 4) throw new Error('Training hours per day are required');
 
@@ -23,8 +23,6 @@ const parseArguments = (args: string[]): ExerciseValues => {
         console.log(element);
         if (isNaN(element)) {
             throw new Error('Training hours per day must be numbers');
-        } else if (element < 0) {
-            throw new Error('At least one exercise day is too low');
         } else if (element > 24) {
             throw new Error('At least one exercise day is too high');
         }
@@ -34,8 +32,6 @@ const parseArguments = (args: string[]): ExerciseValues => {
 
     if (isNaN(target)) {
         throw new Error('Target must be a number');
-    } else if (target < 0) {
-        throw new Error('Target is too low');
     } else if (target > 24) {
         throw new Error('Target is too high');
     } else {
@@ -43,7 +39,6 @@ const parseArguments = (args: string[]): ExerciseValues => {
             exerciseHours, target
         };
     }
-
 };
 
 const calculateExercises = (exerciseHours: number[], target: number): ExerciseReturn => {
@@ -82,10 +77,10 @@ const calculateExercises = (exerciseHours: number[], target: number): ExerciseRe
 };
 
 try {
-    const { exerciseHours, target } = parseArguments(process.argv);
+    const { exerciseHours, target } = parseExerciseArguments(process.argv);
     console.log(calculateExercises(exerciseHours, target));
 } catch (error: unknown) {
-    let errorMessage = 'A problem ocurred';
+    let errorMessage = 'A problem ocurred. ';
     if (error instanceof Error) {
         errorMessage += ` Error: ${error.message}`;
     }
