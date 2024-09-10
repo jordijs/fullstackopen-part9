@@ -1,5 +1,3 @@
-
-
 const calculateBmi = (heightCm: number, weightKg: number): string => {
 
     const heightM = heightCm / 100;
