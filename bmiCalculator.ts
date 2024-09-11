@@ -1,3 +1,5 @@
+require.main === module;
+
 interface BmiValues {
     heightCm: number,
     weightKg: number;
@@ -44,3 +46,5 @@ try {
     }
     console.error(errorMessage);
 }
+
+export default "bmiCalculator";
