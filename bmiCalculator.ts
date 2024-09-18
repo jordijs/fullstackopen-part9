@@ -1,5 +1,3 @@
-require.main === module;
-
 interface BmiValues {
     heightCm: number,
     weightKg: number;
@@ -11,10 +9,17 @@ const parseBmiArguments = (args: string[]): BmiValues => {
     const heightCm: number = Number(args[2]);
     const weightKg: number = Number(args[3]);
 
+    validateBmi(heightCm, weightKg);
+
+    return { heightCm, weightKg };
+};
+
+const validateBmi = (heightCm: number, weightKg: number) => {
+
     if ((heightCm > 1000) || (weightKg > 1000)) throw new Error('Values are too high');
 
     if (!isNaN(heightCm) && !isNaN(weightKg)) {
-        return { heightCm, weightKg };
+        return true;
     } else {
         throw new Error('Provided values were not numbers!');
     }
@@ -37,8 +42,13 @@ const calculateBmi = (heightCm: number, weightKg: number): string => {
 };
 
 try {
-    const { heightCm, weightKg } = parseBmiArguments(process.argv);
-    console.log(calculateBmi(heightCm, weightKg));
+    if (require.main === module) {
+        console.log('require.main===modeule');
+        
+        const { heightCm, weightKg } = parseBmiArguments(process.argv);
+        console.log(calculateBmi(heightCm, weightKg));
+    } 
+    
 } catch (error: unknown) {
     let errorMessage = 'A problem ocurred. ';
     if (error instanceof Error) {
@@ -47,4 +57,4 @@ try {
     console.error(errorMessage);
 }
 
-export default "bmiCalculator";
+export { parseBmiArguments, calculateBmi, validateBmi };

@@ -1,5 +1,5 @@
 import express from 'express';
-// import bmiCalculator from './bmiCalculator';
+import { calculateBmi, validateBmi } from './bmiCalculator';
 import qs from 'qs';
 
 const app = express();
@@ -12,8 +12,18 @@ app.get('/hello', (_req, res) => {
 });
 
 app.get('/bmi', (req, res) => {
-    console.log(req.query);
-    res.send('bmi calculator in progress');
+    try {
+        const heightCm = Number(req.query.height);
+        const weightKg = Number(req.query.weight);
+        validateBmi(heightCm, weightKg);
+        res.send(calculateBmi(heightCm, weightKg));
+    } catch (error: unknown) {
+        let errorMessage = 'A problem ocurred. ';
+        if (error instanceof Error) {
+            errorMessage += ` Error: ${error.message}`;
+        }
+        console.error(errorMessage);
+    }
 });
 
 const PORT = 3003;
