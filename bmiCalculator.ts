@@ -16,6 +16,8 @@ const parseBmiArguments = (args: string[]): BmiValues => {
 
 const validateBmi = (heightCm: number, weightKg: number) => {
 
+
+
     if ((heightCm > 1000) || (weightKg > 1000)) throw new Error('Values are too high');
 
     if (!isNaN(heightCm) && !isNaN(weightKg)) {
@@ -42,9 +44,7 @@ const calculateBmi = (heightCm: number, weightKg: number): string => {
 };
 
 try {
-    if (require.main === module) {
-        console.log('require.main===modeule');
-        
+    if (require.main === module) {        
         const { heightCm, weightKg } = parseBmiArguments(process.argv);
         console.log(calculateBmi(heightCm, weightKg));
     } 

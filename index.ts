@@ -13,16 +13,30 @@ app.get('/hello', (_req, res) => {
 
 app.get('/bmi', (req, res) => {
     try {
+
+        if(!req.query.height || !req.query.weight) throw new Error('Height and weight are required')
+
         const heightCm = Number(req.query.height);
         const weightKg = Number(req.query.weight);
+
         validateBmi(heightCm, weightKg);
-        res.send(calculateBmi(heightCm, weightKg));
+
+        const bmi = calculateBmi(heightCm, weightKg);
+
+        res.send({
+            weight: weightKg,
+            height: heightCm,
+            bmi
+        });
+
     } catch (error: unknown) {
-        let errorMessage = 'A problem ocurred. ';
+
         if (error instanceof Error) {
-            errorMessage += ` Error: ${error.message}`;
+            res.status(400).send({
+                error: error.message
+            });
         }
-        console.error(errorMessage);
+
     }
 });
 
